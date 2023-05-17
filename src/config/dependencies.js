@@ -1,4 +1,4 @@
-import AccountsRepositoryInMemory from '../accounts/repositories/in-memory/InMemoryRepository';
+import AccountsRepositoryInMemory from '../accounts/repositories/InMemoryRepository';
 
 const buildDependencies = () => {
   const dependencies = {

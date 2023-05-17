@@ -15,9 +15,13 @@ const port = process.env.PORT;
 const dependencies = buildDependencies();
 
 const app = express();
+
+// Use express.json middleware to parse JSON request bodies
+app.use(express.json());
+
 app.use('/api/movies', createMoviesRouter(dependencies));
 app.use('/api/genres', genresRouter);
-//app.use('/api/accounts', createAccountsRouter(dependencies));
+app.use('/api/accounts', createAccountsRouter(dependencies));
 
 app.listen(port, () => {
   console.info(`Server running at ${port}`);
