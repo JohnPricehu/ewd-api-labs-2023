@@ -13,5 +13,10 @@ export default {
           );
           return response.data;
     },
+    findUpcoming: async () => {
+      const url = `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.TMDB_KEY}&language=en-US&include_adult=false&include_video=false`;
+      const response = await axios.get(url);
+      return response.data;
+    },
 
   };

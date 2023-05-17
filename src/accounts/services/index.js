@@ -5,6 +5,10 @@ export default {
     const account = new Account(undefined, firstName, lastName, email, password);
     return accountsRepository.persist(account);
   },
+  updateAccount: async (id, firstName, lastName, email, password, {accountsRepository}) => {
+    const account = new Account(id, firstName, lastName, email, password);
+    return accountsRepository.merge(account);
+  },
   getAccount: (accountId, {accountsRepository}) => {
     return accountsRepository.get(accountId);
   },
