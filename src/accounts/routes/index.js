@@ -1,12 +1,18 @@
+import ValidationController from '../controllers/ValidationController'; //add to import statements at top of file
 import express from 'express';
 import AccountsController from '../controllers';
+
+
 
 const createRouter = (dependencies) => {
     const router = express.Router();
     // load controller with dependencies
+    const validationController = ValidationController(dependencies);//Add this lineLoad validation controller with dependencies
     const accountsController = AccountsController(dependencies);
     router.route('/')
-        .post(accountsController.createAccount);
+        .post(validationController.validateAccount,accountsController.createAccount); //add validateAccount to route
+    // router.route('/')
+    //     .post(accountsController.createAccount);
 
         router.route('/')
         .get(accountsController.listAccounts);
@@ -16,7 +22,10 @@ const createRouter = (dependencies) => {
 
         router.route('/:id')
         .put(accountsController.updateAccount);
-
+       
+    router.route('/security/token')
+                .post(accountsController.authenticateAccount);
+        
     return router;
 };
 
