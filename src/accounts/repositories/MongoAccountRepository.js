@@ -52,4 +52,5 @@ export default class extends AccountRepository {
             return new Account(result.id, result.firstName, result.lastName, result.email, result.password, result.favourites);
         });
     }
+
 }
