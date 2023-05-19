@@ -15,7 +15,7 @@ const createMoviesRouter = (dependencies) => {
         .get(accountsController.verify,moviesController.getMovie);
 
     router.route('/')
-        .get(moviesController.find); 
+        .get(accountsController.verify,moviesController.find); 
 
     // router.route('/:id/reviews')
     //     .get(moviesController.getMovieReviews);
