@@ -26,6 +26,7 @@ export default (dependencies) => {
           next(error);
         }
       };
+      
     return {
         getMovie,
         find,
