@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "63a21333-9a65-4e0e-b5a8-8e1c73b290f4",
+		"_postman_id": "66abb97a-6877-46be-acf2-8318ffd889d0",
 		"name": "Movies API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "18260675"
 	},
 	"item": [
 		{
-			"name": "Create A New Account",
+			"name": "Create New Account",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -46,7 +46,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\" : \"{{firstName}}\",\r\n    \"lastName\" : \"{{lastName}}\",\r\n    \"email\" : \"{{email}}\",\r\n    \"password\" : \"{{password}}\"\r\n}",
+					"raw": "{\r\n    \"firstName\" : \"{{firstName}}\",   \r\n    \"lastName\" : \"{{lastName}}\" ,   \r\n    \"email\" : \"{{email}}\",   \r\n    \"password\" : \"{{password}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -98,7 +98,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\" : \"{{email}}\",\r\n    \"password\" : \"{{password}}\"\r\n}",
+					"raw": "{\r\n    \"email\" : \"{{email}}\",\r\n    \"password\" : \"{{password}}\"\r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -261,7 +261,7 @@
 		},
 		{
 			"key": "email",
-			"value": "john@doe.ie",
+			"value": "123@gmail.com",
 			"type": "string"
 		},
 		{
