@@ -76,11 +76,39 @@ export default (dependencies) => {
         }
     };
 
+    const addMustWatch = async (request, response, next) => {
+        try {
+            const { movieId } = request.body;
+            const id = request.params.id;
+            const account = await accountService.getAccount(id, dependencies);
+            
+            // Preventing duplicate mustwatches
+            if (account.mustWatches.includes(movieId)) {
+                return response.status(400).send({ error: 'This movie is already a must watch.' });
+            }
+
+            const updatedAccount = await accountService.addMustWatch(id, movieId, dependencies);
+            response.status(200).json(updatedAccount);
+        } catch (err) {
+            next(new Error(`Invalid Data ${err.message}`));
+        }
+    };
+
     const getFavourites = async (request, response, next) => {
         try {
             const id = request.params.id;
             const favourites = await accountService.getFavourites(id, dependencies);
             response.status(200).json(favourites);
+        } catch (err) {
+            next(new Error(`Invalid Data ${err.message}`));
+        }
+    };
+
+    const getMustWatches = async (request, response, next) => {
+        try {
+            const id = request.params.id;
+            const mustWatches = await accountService.getMustWatches(id, dependencies);
+            response.status(200).json(mustWatches);
         } catch (err) {
             next(new Error(`Invalid Data ${err.message}`));
         }
@@ -113,6 +141,8 @@ export default (dependencies) => {
         authenticateAccount,
         addFavourite,
         getFavourites,
+        addMustWatch,
+        getMustWatches,
         verify
     };
 };

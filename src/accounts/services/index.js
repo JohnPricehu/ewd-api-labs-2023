@@ -40,6 +40,16 @@ export default {
     return await accountsRepository.merge(account);
 
   },
+  getMustWatches: async (accountId, { accountsRepository }) => {
+    const account = await accountsRepository.get(accountId);
+    return account.mustWatches;
+  },
+  addMustWatch: async (accountId, movieId, { accountsRepository }) => {
+    const account = await accountsRepository.get(accountId);
+    account.mustWatches.push(movieId);
+    return await accountsRepository.merge(account);
+
+  },
   verifyToken:   async (token,{accountsRepository, tokenManager}) => {
     const decoded = await tokenManager.decode(token);
     const user = await accountsRepository.getByEmail(decoded.email);

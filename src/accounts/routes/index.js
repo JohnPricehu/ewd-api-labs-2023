@@ -30,6 +30,10 @@ const createRouter = (dependencies) => {
                 .post(accountsController.addFavourite);
     router.route('/:id/favourites')
                 .get(accountsController.getFavourites);
+    router.route('/:id/mustwatches')
+                .post(accountsController.addMustWatch);
+    router.route('/:id/mustwatches')
+                .get(accountsController.getMustWatches);
         
     return router;
 };
