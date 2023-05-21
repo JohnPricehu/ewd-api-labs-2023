@@ -1,10 +1,14 @@
 import express from 'express';
-import {movies, movieReviews, movieDetails, movieImages, movieCast, similarMovies} from './moviesData';
+import {movies, upcomingMovies, movieReviews, movieDetails, movieImages, movieCast, similarMovies} from './moviesData';
 
 const router = express.Router(); 
 
 router.get('/', (req, res) => {
     res.json(movies);
+});
+
+router.get('/upcoming', (req, res) => {
+    res.json(upcomingMovies);
 });
 
 // Get movie details

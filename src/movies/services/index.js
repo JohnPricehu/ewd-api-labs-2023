@@ -7,17 +7,19 @@ export default {
         );
         return response.data;
     },
-    find: async (query) => {
-        const response = await axios.get(
-            `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_KEY}&language=en-US&include_adult=false&include_video=false&${query}`
-        );
-        return response.data;
-    },
-    findUpcoming: async () => {
-        const url = `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.TMDB_KEY}&language=en-US&include_adult=false&include_video=false`;
-        const response = await axios.get(url);
-        return response.data;
-    },
+    find: async (query, page = 1) => {
+      const response = await axios.get(
+          `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=${page}&${query}`
+      );
+      return response.data;
+  },
+  
+    findUpcoming: async (query, page = 1) => {
+      const url = `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=${page}&${query}`;
+      const response = await axios.get(url);
+      return response.data;
+  },
+  
     getMovieImages: async (movieId) => {
         const response = await axios.get(
             `https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${process.env.TMDB_KEY}`

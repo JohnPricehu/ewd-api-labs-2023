@@ -11,21 +11,23 @@ export default (dependencies) => {
         response.status(200).json(movie);
     };
     const find = async (request, response, next) => {
-        //input
-        const query = request.query;
-        // Treatment
-        const movies = await moviesService.find(query, dependencies);
-        //output
-        response.status(200).json(movies);
-    };
+      //input
+      const { page, ...query } = request.query;
+      // Treatment
+      const movies = await moviesService.find(query, page, dependencies);
+      //output
+      response.status(200).json(movies);
+  };
     const getUpcomingMovies = async (request, response, next) => {
-        try {
-          const movies = await moviesService.findUpcoming();
-          response.status(200).json(movies);
-        } catch (error) {
-          next(error);
-        }
-      };
+      try {
+        const { page, ...query } = request.query;
+        const movies = await moviesService.findUpcoming(query, page, dependencies);
+        response.status(200).json(movies);
+      } catch (error) {
+        next(error);
+      }
+  };
+  
     const getMovieImages = async (request, response, next) => {
         const movieId = request.params.id;
         const images = await moviesService.getMovieImages(movieId, dependencies);

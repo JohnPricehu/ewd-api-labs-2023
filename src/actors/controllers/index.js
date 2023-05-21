@@ -9,8 +9,8 @@ export default (dependencies) => {
     };
 
     const find = async (request, response, next) => {
-        const query = request.query;
-        const actors = await actorsService.find(query, dependencies);
+        const { page, ...query } = request.query;
+        const actors = await actorsService.find(query, page, dependencies);
         response.status(200).json(actors);
     };
 
