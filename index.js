@@ -25,7 +25,7 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'My API',
+      title: 'ewd-api-labs-2023 ',
       version: '1.0.0',
     },
   },
