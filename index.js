@@ -18,7 +18,24 @@ const port = process.env.PORT;
 
 const dependencies = buildDependencies();
 
+const swaggerJsdoc = require('swagger-jsdoc');
+
+const options = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'My API',
+      version: '1.0.0',
+    },
+  },
+  apis: ['./src/**/*.js'], // path to the API files
+};
+
+const specs = swaggerJsdoc(options);
+
+
 const app = express();
+
 
 // Use express.json middleware to parse JSON request bodies
 app.use(express.json());
@@ -28,6 +45,11 @@ app.use('/api/genres', genresRouter);
 app.use('/api/accounts', createAccountsRouter(dependencies));
 app.use('/api/actors', createActorsRouter(dependencies));
 app.use(errorHandler);
+
+const swaggerUi = require('swagger-ui-express');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
 
 app.listen(port, () => {
   console.info(`Server running at ${port}`);
