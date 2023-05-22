@@ -8,6 +8,7 @@ import createMoviesRouter from './src/movies/routes';
 import createActorsRouter from './src/actors/routes';
 import db from './src/config/db';
 import errorHandler from './src/utils/ErrorHandler';
+import createGenresRouter from './src/genres/routes';
 
 dotenv.config();
 
@@ -44,6 +45,8 @@ app.use('/api/movies', createMoviesRouter(dependencies));
 app.use('/api/genres', genresRouter);
 app.use('/api/accounts', createAccountsRouter(dependencies));
 app.use('/api/actors', createActorsRouter(dependencies));
+app.use('/api/genres', createGenresRouter(dependencies));
+
 app.use(errorHandler);
 
 const swaggerUi = require('swagger-ui-express');
