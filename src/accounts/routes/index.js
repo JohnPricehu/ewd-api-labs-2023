@@ -134,7 +134,9 @@ const createRouter = (dependencies) => {
      *         description: Unauthorized
      *       '500':
      *         description: Internal server error
-     */      
+     */   
+    router.route('/security/token')
+    .post(accountsController.authenticateAccount);   
         /**
      * @openapi
      * /api/accounts/{id}/favourites:
