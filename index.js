@@ -42,7 +42,6 @@ const app = express();
 app.use(express.json());
 
 app.use('/api/movies', createMoviesRouter(dependencies));
-app.use('/api/genres', genresRouter);
 app.use('/api/accounts', createAccountsRouter(dependencies));
 app.use('/api/actors', createActorsRouter(dependencies));
 app.use('/api/genres', createGenresRouter(dependencies));

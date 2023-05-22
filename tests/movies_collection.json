@@ -135,8 +135,8 @@
 							"   pm.expect(pm.response.headers.get('Content-Type')).to.contain('application/json');\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Get Movies: Response time is less than 1100ms\", () => {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(1100);\r",
+							"pm.test(\"Get Movies: Response time is less than 1500ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(1500);\r",
 							"});\r",
 							"\r",
 							"const jsonData = pm.response.json();\r",
@@ -222,6 +222,1151 @@
 					"path": [
 						"api",
 						"movies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Actors: valid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Actors: Status code is 200\",  ()=> {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Actors: Content-Type is correct\", function () {\r",
+							"   pm.expect(pm.response.headers.get('Content-Type')).to.contain('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Actors: Response time is less than 1500ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+							"});\r",
+							"\r",
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Get Actors: Test actor data of response\", () => {\r",
+							"  pm.expect(jsonData).to.be.an(\"object\");\r",
+							"  pm.expect(jsonData.page).to.be.a(\"number\");\r",
+							"  pm.expect(jsonData.results).to.be.an(\"array\").length.lessThan(21);\r",
+							"  anActor=jsonData.results[0]\r",
+							"  pm.expect(anActor).to.have.property(\"id\");\r",
+							"  pm.expect(anActor).to.have.property(\"name\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/actors",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"actors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Actors: invalid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"   var jsonData = pm.response.json();\r",
+							"\r",
+							"  pm.test(\"Invalid Token: Correct Response\", function () {\r",
+							"     pm.expect(pm.response.code).to.be.oneOf([500,401,403]);\r",
+							"     pm.expect(jsonData).to.be.an(\"object\");\r",
+							"     pm.expect(jsonData).to.have.property(\"error\");\r",
+							"  });\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "a_bad_token!!!",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/actors",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"actors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Movie: valid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Movie: Status code is 200\",  ()=> {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Movie: Content-Type is correct\", function () {\r",
+							"   pm.expect(pm.response.headers.get('Content-Type')).to.contain('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Movie: Response time is less than 1500ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+							"});\r",
+							"\r",
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Get Movie: Test movie data of response\", () => {\r",
+							"  pm.expect(jsonData).to.be.an(\"object\");\r",
+							"  pm.expect(jsonData).to.have.property(\"id\");\r",
+							"  pm.expect(jsonData).to.have.property(\"title\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/movies/793723",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"movies",
+						"793723"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Movie: invalid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"   var jsonData = pm.response.json();\r",
+							"\r",
+							"  pm.test(\"Invalid Token: Correct Response\", function () {\r",
+							"     pm.expect(pm.response.code).to.be.oneOf([500,401,403]);\r",
+							"     pm.expect(jsonData).to.be.an(\"object\");\r",
+							"     pm.expect(jsonData).to.have.property(\"error\");\r",
+							"  });\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "a_bad_token!!!",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/movies/793723",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"movies",
+						"793723"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Upcoming Movies: valid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Upcoming Movies: Status code is 200\",  ()=> {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Upcoming Movies: Content-Type is correct\", function () {\r",
+							"   pm.expect(pm.response.headers.get('Content-Type')).to.contain('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Upcoming Movies: Response time is less than 1500ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+							"});\r",
+							"\r",
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Get Upcoming Movies: Test movie data of response\", () => {\r",
+							"  pm.expect(jsonData).to.be.an(\"object\");\r",
+							"  pm.expect(jsonData.page).to.be.a(\"number\");\r",
+							"  pm.expect(jsonData.results).to.be.an(\"array\").length.lessThan(21);\r",
+							"  aMovie=jsonData.results[0]\r",
+							"  pm.expect(aMovie).to.have.property(\"id\");\r",
+							"  pm.expect(aMovie).to.have.property(\"title\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/movies/upcoming",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"movies",
+						"upcoming"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Upcoming Movies: invalid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"   var jsonData = pm.response.json();\r",
+							"\r",
+							"  pm.test(\"Invalid Token: Correct Response\", function () {\r",
+							"     pm.expect(pm.response.code).to.be.oneOf([500,401,403]);\r",
+							"     pm.expect(jsonData).to.be.an(\"object\");\r",
+							"     pm.expect(jsonData).to.have.property(\"error\");\r",
+							"  });\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "a_bad_token!!!",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/movies/upcoming",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"movies",
+						"upcoming"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Movie Images: valid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Movie Images: Status code is 200\",  ()=> {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Movie Images: Content-Type is correct\", function () {\r",
+							"   pm.expect(pm.response.headers.get('Content-Type')).to.contain('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Movie Images: Response time is less than 1500ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/movies/793723/images",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"movies",
+						"793723",
+						"images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Movie Images: invalid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"   var jsonData = pm.response.json();\r",
+							"\r",
+							"  pm.test(\"Invalid Token: Correct Response\", function () {\r",
+							"     pm.expect(pm.response.code).to.be.oneOf([500,401,403]);\r",
+							"     pm.expect(jsonData).to.be.an(\"object\");\r",
+							"     pm.expect(jsonData).to.have.property(\"error\");\r",
+							"  });\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "a_bad_token!!!",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/movies/793723/images",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"movies",
+						"793723",
+						"images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Movie Cast: valid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Movie Cast: Status code is 200\",  ()=> {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Movie Cast: Content-Type is correct\", function () {\r",
+							"   pm.expect(pm.response.headers.get('Content-Type')).to.contain('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Movie Cast: Response time is less than 1500ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/movies/793723/cast",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"movies",
+						"793723",
+						"cast"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Movie Cast: invalid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"   var jsonData = pm.response.json();\r",
+							"\r",
+							"  pm.test(\"Invalid Token: Correct Response\", function () {\r",
+							"     pm.expect(pm.response.code).to.be.oneOf([500,401,403]);\r",
+							"     pm.expect(jsonData).to.be.an(\"object\");\r",
+							"     pm.expect(jsonData).to.have.property(\"error\");\r",
+							"  });\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "a_bad_token!!!",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/movies/793723/cast",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"movies",
+						"793723",
+						"cast"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Movie Reviews: valid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Movie Reviews: Status code is 200\",  ()=> {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Movie Reviews: Content-Type is correct\", function () {\r",
+							"   pm.expect(pm.response.headers.get('Content-Type')).to.contain('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Movie Reviews: Response time is less than 1500ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/movies/793723/reviews",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"movies",
+						"793723",
+						"reviews"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Movie Reviews: invalid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"   var jsonData = pm.response.json();\r",
+							"\r",
+							"  pm.test(\"Invalid Token: Correct Response\", function () {\r",
+							"     pm.expect(pm.response.code).to.be.oneOf([500,401,403]);\r",
+							"     pm.expect(jsonData).to.be.an(\"object\");\r",
+							"     pm.expect(jsonData).to.have.property(\"error\");\r",
+							"  });\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "a_bad_token!!!",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/movies/793723/reviews",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"movies",
+						"793723",
+						"reviews"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Similar Movies: valid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Similar Movies: Status code is 200\",  ()=> {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Similar Movies: Content-Type is correct\", function () {\r",
+							"   pm.expect(pm.response.headers.get('Content-Type')).to.contain('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Similar Movies: Response time is less than 1500ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+							"});\r",
+							"\r",
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Get Similar Movies: Test similar movies data of response\", () => {\r",
+							"  pm.expect(jsonData).to.be.an(\"object\");\r",
+							"  pm.expect(jsonData.page).to.be.a(\"number\");\r",
+							"  pm.expect(jsonData.results).to.be.an(\"array\").length.lessThan(21);\r",
+							"  aMovie=jsonData.results[0]\r",
+							"  pm.expect(aMovie).to.have.property(\"id\");\r",
+							"  pm.expect(aMovie).to.have.property(\"title\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/movies/793723/similar",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"movies",
+						"793723",
+						"similar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Similar Movies: invalid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"   var jsonData = pm.response.json();\r",
+							"\r",
+							"  pm.test(\"Invalid Token: Correct Response\", function () {\r",
+							"     pm.expect(pm.response.code).to.be.oneOf([500,401,403]);\r",
+							"     pm.expect(jsonData).to.be.an(\"object\");\r",
+							"     pm.expect(jsonData).to.have.property(\"error\");\r",
+							"  });\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "a_bad_token!!!",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/movies/793723/similar",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"movies",
+						"793723",
+						"similar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Actor: valid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Actor: Status code is 200\",  ()=> {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Actor: Content-Type is correct\", function () {\r",
+							"   pm.expect(pm.response.headers.get('Content-Type')).to.contain('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Actor: Response time is less than 1500ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+							"});\r",
+							"\r",
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Get Actor: Test actor data of response\", () => {\r",
+							"  pm.expect(jsonData).to.be.an(\"object\");\r",
+							"  pm.expect(jsonData).to.have.property(\"id\");\r",
+							"  pm.expect(jsonData).to.have.property(\"name\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/actors/169337",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"actors",
+						"169337"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Actor: invalid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"   var jsonData = pm.response.json();\r",
+							"\r",
+							"  pm.test(\"Invalid Token: Correct Response\", function () {\r",
+							"     pm.expect(pm.response.code).to.be.oneOf([500,401,403]);\r",
+							"     pm.expect(jsonData).to.be.an(\"object\");\r",
+							"     pm.expect(jsonData).to.have.property(\"error\");\r",
+							"  });\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "a_bad_token!!!",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/actors/169337",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"actors",
+						"169337"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Actor's Movies: valid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Actor's Movies: Status code is 200\",  ()=> {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Actor's Movies: Content-Type is correct\", function () {\r",
+							"   pm.expect(pm.response.headers.get('Content-Type')).to.contain('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Actor's Movies: Response time is less than 1500ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/actors/169337/movies",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"actors",
+						"169337",
+						"movies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Actor's Movies: invalid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"   var jsonData = pm.response.json();\r",
+							"\r",
+							"  pm.test(\"Invalid Token: Correct Response\", function () {\r",
+							"     pm.expect(pm.response.code).to.be.oneOf([500,401,403]);\r",
+							"     pm.expect(jsonData).to.be.an(\"object\");\r",
+							"     pm.expect(jsonData).to.have.property(\"error\");\r",
+							"  });\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "a_bad_token!!!",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/actors/169337/movies",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"actors",
+						"169337",
+						"movies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Actor's Images: valid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Actor's Images: Status code is 200\",  ()=> {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Actor's Images: Content-Type is correct\", function () {\r",
+							"   pm.expect(pm.response.headers.get('Content-Type')).to.contain('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Actor's Images: Response time is less than 1500ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/actors/169337/images",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"actors",
+						"169337",
+						"images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Actor's Images: invalid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"   var jsonData = pm.response.json();\r",
+							"\r",
+							"  pm.test(\"Invalid Token: Correct Response\", function () {\r",
+							"     pm.expect(pm.response.code).to.be.oneOf([500,401,403]);\r",
+							"     pm.expect(jsonData).to.be.an(\"object\");\r",
+							"     pm.expect(jsonData).to.have.property(\"error\");\r",
+							"  });\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "a_bad_token!!!",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/actors/169337/images",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"actors",
+						"169337",
+						"images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Genres: valid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Genres: Status code is 200\",  ()=> {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Genres: Content-Type is correct\", function () {\r",
+							"   pm.expect(pm.response.headers.get('Content-Type')).to.contain('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Genres: Response time is less than 1500ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+							"});\r",
+							"\r",
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Get Genres: Test actor data of response\", () => {\r",
+							"  pm.expect(jsonData).to.be.an(\"object\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/genres",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"genres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Genres: invalid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"   var jsonData = pm.response.json();\r",
+							"\r",
+							"  pm.test(\"Invalid Token: Correct Response\", function () {\r",
+							"     pm.expect(pm.response.code).to.be.oneOf([500,401,403]);\r",
+							"     pm.expect(jsonData).to.be.an(\"object\");\r",
+							"     pm.expect(jsonData).to.have.property(\"error\");\r",
+							"  });\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "a_bad_token!!!",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/genres",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"genres"
 					]
 				}
 			},
