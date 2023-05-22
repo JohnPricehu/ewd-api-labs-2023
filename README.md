@@ -156,10 +156,12 @@ export const getMovies = (page = 1) => {
   });
 };
 
+
+~~~
+
 You can use the API normally in the front-end application after logging in:
 
 ![](images/Screenshot.png)
-~~~
 
 ## Extra features
 
